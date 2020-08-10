@@ -1,30 +1,51 @@
-<div>
+<!-- Sidebar -->
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+    <!-- Sidebar - Brand -->
+    <a class="sidebar-brand d-flex align-items-center justify-content-center " href="{{ route('dashboard') }}">
+      <div class="sidebar-brand-icon rotate-n-15">
+        <i class="fas fa-laugh-wink"></i>
+      </div>
+      <div class="sidebar-brand-text mx-3">Rol-Per<sup>v2</sup></div>
+    </a>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider my-0">
+
+    <!-- Nav Item - Dashboard -->
+    <li class="nav-item">
+      <a class="nav-link" href="{{ route('dashboard') }}">
+        <i class="fas fa-fw fa-tachometer-alt"></i>
+        <span>Dashboard</span></a>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+    <!-- Heading -->
+
     @foreach ($navigations as $navigation)
         @can($navigation->permission_name)
-            <div class="mb-4">
-                <small class="d-block text-secondary mb-2 text-uppercase">{{ $navigation->name }}</small>
-                <div class="list-group">
-                    @foreach ($navigation->children as $child)
-                        <a href="{{ url($child->url) }}" class="list-group-item list-group-item-action">{{ $child->name }}</a>
-                    @endforeach
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse{{ $navigation->id }}" aria-expanded="true" aria-controls="collapse{{ $navigation->id }}">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>{{ $navigation->name }}</span>
+                </a>
+                <div id="collapse{{ $navigation->id }}" class="collapse" aria-labelledby="heading{{ $navigation->id }}" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        
+                        @foreach ($navigation->children as $child)
+                        <a class="collapse-item" href="{{ url($child->url) }}">{{ $child->name }}</a>
+                        @endforeach
+                        
                     </div>
-            </div>
+                </div>
+                <!-- Divider -->
+                <hr class="sidebar-divider">
+            </li>
         @endcan
     @endforeach
 
-    <div class="mb-4">
-        <small class="d-block text-secondary mb-2 text-uppercase">Logout</small>
-        <div class="list-group">
-            <a class="list-group-item list-group-item-action" href="{{ route('logout') }}"
-                onclick="event.preventDefault();
-                                document.getElementById('logout-form').submit();">
-                {{ __('Logout') }}
-            </a>
-
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                @csrf
-            </form>
-        </div>
-    </div>
-    
-</div>
+  </ul>
+  <!-- End of Sidebar -->
